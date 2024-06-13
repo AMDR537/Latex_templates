@@ -1,0 +1,524 @@
+\documentclass[UTF8]{article}
+\usepackage[zihao = -4]{ctex}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{array}
+
+\title{\textbf{力学与机械波实验}}
+\author{}
+\date{}
+
+\titleformat{\section}[hang]{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\zihao{-4}\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+    \thispagestyle{empty}
+    \maketitle
+    \newpage
+    \thispagestyle{empty}
+    \tableofcontents
+    \newpage
+
+
+    \section{运动守恒定律实验}
+        \subsection{实验目的}
+            \noindent\hspace{2em}（1）理解动能、重力势能、机械能守恒；掌握估测小球动能和重力势能的方法；验证机械能守恒定律。
+            
+            \noindent\hspace{2em}（2）理解动量、动量守恒；掌握估测小球速度和动量的方法，验证动量守恒定律。
+        \subsection{实验原理}
+            \noindent\hspace{2em}以双线牛顿单摆为观测对象，通过测量小球的速度估算动能，通过测量其高度估算重力势能。速度和高度的测量通过钢尺+手机
+            拍摄视频的方式进行数据采集，利用开源软件Tracker进行视频分析和小球速度、高度估计。
+
+            \noindent\hspace{2em}以双单摆为观测对象，通过速度测量估算小球的动量；通过两个小球的对心碰撞验证动量守恒定律。速度的测量方法同上。
+        \subsection{实验仪器}
+            \noindent\hspace{2em}双线牛顿单摆、双线牛顿双摆、钢卷尺、手机、计算机。
+        \subsection{实验步骤}
+            \begin{enumerate}[left=2em, label=(\arabic*)]
+                \item 放置双线单摆。
+                \item 将手机尽量垂直于摆动平面，在一定距离处固定好并开启录像功能。
+                \item 将钢尺平行于摆动平面并尽量靠近单摆放置。
+                \item 将小球置于某一高度并放开，令其进行自由摆动。
+                \item 用手机拍摄小球摆动视频，利用Tracker软件分析计算小球的位置，速度。
+                \item 利用公式
+                $$ E_k = \frac{1}{2}mv^2, E_p = mgh, E_m = E_k + E_p $$                
+                计算小球在不同时刻的动能、重力势能，验证机械能守恒定律。
+                \item 改变小球初始高度进行多次实验。
+                \item 添加另一个双线单摆，形成双单摆。
+                \item 将小球A置于某一高度并放开，令其摆动并与小球B碰撞。
+                \item 用手机拍摄小球碰撞视频，利用Tracker软件分析计算两个小球碰撞前后的速度。
+                \item 利用公式
+                $$ p = mv, \Delta p = p_{\text{before}} - p_{\text{after}} $$
+                计算小球在碰撞前后的动量变化，验证动量守恒定律。
+                \item 改变小球初始高度、质量比进行多次实验。
+            \end{enumerate}
+        \subsection{实验数据}
+            \begin{enumerate}
+                \item 验证机械能守恒（忽略空气阻力）：
+                    \begin{enumerate}[left=2em, label=\arabic*)]
+                        \item 初始高度$h=\SI{6}{cm}$:
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    c |
+                                    >{\centering\arraybackslash}X
+                                }
+                                \hline
+                                \begin{minipage}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/60.png}
+                                \end{minipage}
+                                &
+                                \begin{minipage}{\linewidth}
+                                    \begin{tabular}{
+                                        || >{\centering\arraybackslash}p{0.248\linewidth}
+                                        | >{\centering\arraybackslash}p{0.248\linewidth}
+                                        | >{\centering\arraybackslash}p{0.248\linewidth}
+                                        ||
+                                    }
+                                        \hline
+                                        动能(J) & 重力势能(J) & 机械能(J)\\ \hline
+                                        5.792e-5 & 3.081e-3 & 3.139e-3 \\ \hline
+                                        1.444e-3 & 1.541e-3 & 2.985e-3 \\ \hline
+                                        1.697e-3 & 1.154e-3 & 2.851e-3\\ \hline
+                                    \end{tabular}                                    
+                                \end{minipage}
+
+                                \\ \hline
+                                \end{tabularx}
+                                \caption{初始高度$h=\SI{6}{cm}$}
+                                \label{form:60}
+                            \end{table}
+                            在忽略空气阻力的情况下，可以近似认为机械能守恒。
+                        \item 初始高度$h=\SI{7.5}{cm}$:
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    c |
+                                    >{\centering\arraybackslash}X
+                                }
+                                \hline
+                                \begin{minipage}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth, height=0.25\textheight]{E:/files/working/latex/物理实验报告/image/75.png}
+                                \end{minipage}
+                                &
+                                \begin{minipage}{\linewidth}
+                                    \begin{tabular}{
+                                        || >{\centering\arraybackslash}p{0.248\linewidth}
+                                        | >{\centering\arraybackslash}p{0.248\linewidth}
+                                        | >{\centering\arraybackslash}p{0.248\linewidth}
+                                        ||
+                                    }
+                                        \hline
+                                        动能(J) & 重力势能(J) & 机械能(J)\\ \hline
+                                        5.506e-3 & 4.856e-4 & 5.991e-3 \\ \hline
+                                        9.096e-4 & 5.072e-3 & 5.981e-3 \\ \hline
+                                        3.289e-3 & 2.644e-3 & 5.932e-3\\ \hline
+                                    \end{tabular}                                    
+                                \end{minipage}
+
+                                \\ \hline
+                                \end{tabularx}
+                                \caption{初始高度$h=\SI{7.5}{cm}$}
+                                \label{form:75}
+                            \end{table}
+                            在忽略空气阻力的情况下，可以近似认为机械能守恒。
+
+                        
+                        \item 初始高度$h=\SI{9.5}{cm}$:
+                        \begin{table}[H]
+                            \centering
+                            \begin{tabularx}{\textwidth}{
+                                c |
+                                >{\centering\arraybackslash}X
+                            }
+                            \hline
+                            \begin{minipage}{0.45\textwidth}
+                                \centering
+                                \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/95.png}
+                            \end{minipage}
+                            &
+                            \begin{minipage}{\linewidth}
+                                \begin{tabular}{
+                                    || >{\centering\arraybackslash}p{0.248\linewidth}
+                                    | >{\centering\arraybackslash}p{0.248\linewidth}
+                                    | >{\centering\arraybackslash}p{0.248\linewidth}
+                                    ||
+                                }
+                                    \hline
+                                    动能(J) & 重力势能(J) & 机械能(J)\\ \hline
+                                    1.177e-2 & 1.006e-2 & 2.183e-2 \\ \hline
+                                    7.144e-3 & 1.446e-2 & 2.160e-2 \\ \hline
+                                    1.605e-2 & 1.055e-2 & 2.120e-2\\ \hline
+                                \end{tabular}                                    
+                            \end{minipage}
+
+                            \\ \hline
+                            \end{tabularx}
+                            \caption{初始高度$h=\SI{9.5}{cm}$}
+                            \label{form:95}
+                        \end{table}
+                        在忽略空气阻力的情况下，可以认为机械能守恒。
+                    \end{enumerate}
+                \item 验证动量守恒：
+                    \begin{enumerate}[left=2em, label=\arabic*)]
+                        \item 质量比1.728，初始高度6cm
+                            \begin{figure}[H]
+                                \centering
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/1A.png}
+                                    \caption{小球A}
+                                    \label{fig:1A}
+                                \end{subfigure}
+                                \hfill
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/1B.png}
+                                    \caption{小球B}
+                                    \label{fig:1B}
+                                \end{subfigure}
+                                \caption{质量比1.728，初始高度6cm}
+                                \label{fig:1.728-6}
+                            \end{figure}
+                            \vfill
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    || >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    ||
+                                }
+                                    \hline
+                                    碰撞次数 & 小球A速度(m/s) & 小球B速度(m/s) & 总动量(kg$\cdot$m/s)\\ \hline
+                                    第一次前： & 3.65e-1 & 0 & 1.09e-2 \\ \hline
+                                    第一次后： & 2.86e-1 & 2.39e-1 & 1.27e-2 \\ \hline
+                                    第二次前： & 2.88e-1 & 3.16e-1 & 1.41e-2\\ \hline
+                                    第二次后： & 2.23e-1 & 4.56e-1 & 1.46e-2 \\ \hline
+                                    第三次前： & -2.19e-1 & -3.32e-1 & -1.23e-2 \\ \hline
+                                    第三次后： & -3.14e-1 & -1.84e-1 & -1.26e-3\\ \hline
+                                    
+                                \end{tabularx}
+                                \caption{质量比1.728，初始高度6cm\protect\footnotemark}
+                                \label{form:1.728-6}
+                                
+                            \end{table}
+                            \footnotetext{由于手机拍摄产生的丢帧和不良截取问题，部分数据并没有采用最接近碰撞时刻的数据。
+                            碰撞次数也是便于观察的第一，第二，第三次。}                                
+                        \item 质量比3.835，初始高度6cm
+                            \begin{figure}[H]
+                                \centering
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/2A.png}
+                                    \caption{小球A}
+                                    \label{fig:2A}
+                                \end{subfigure}
+                                \hfill
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/2C.png}
+                                    \caption{小球C}
+                                    \label{fig:C}
+                                    
+                                \end{subfigure}
+                                \caption{质量比3.835，初始高度6cm}
+                                \label{fig:3.835-6}
+                            \end{figure}
+                            \vfill
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    || >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    ||
+                                }
+                                    \hline
+                                    碰撞次数 & 小球A速度(m/s) & 小球C速度(m/s) & 总动量(kg$\cdot$m/s)\\ \hline
+                                    第一次前： & 3.07e-1 & 0 & 9.20e-3 \\ \hline
+                                    第一次后： & 2.46e-1 & 2.24e-1 & 9.22e-3 \\ \hline
+                                    第二次前： & -1.64e-1 & -3.96e-1 & -8.06e-3\\ \hline
+                                    第二次后： & -2.72e-1 & -3.19e-2 & -8.42e-3 \\ \hline
+                                    第三次前： & -1.71e-1 & -4.53e-1 & -8.84e-3 \\ \hline
+                                    第三次后： & -2.02e-1 & -1.50e-1 & -7.30e-3\\ \hline
+                                    
+                                \end{tabularx}
+                                \caption{质量比3.835，初始高度6cm}
+                                \label{form:3.835-6}
+                            \end{table}
+                        \item 质量比1.728，初始高度7.5cm
+                            \begin{figure}[H]
+                                \centering
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/3A.png}
+                                    \caption{小球A}
+                                    \label{fig:3A}
+                                \end{subfigure}
+                                \hfill
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/3B.png}
+                                    \caption{小球B}
+                                    \label{fig:3B}
+                                \end{subfigure}
+                                \caption{质量比1.728，初始高度7.5cm}
+                                \label{fig:1.728-7.5}
+                            \end{figure}
+                            \vfill
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    || >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    ||
+                                }
+                                    \hline
+                                    碰撞次数 & 小球A速度(m/s) & 小球B速度(m/s) & 总动量(kg$\cdot$m/s)\\ \hline
+                                    第一次前： & 1.19e-1 & -1.73e-2 & 3.27e-3 \\ \hline
+                                    第一次后： & -1.45e-2 & 1.67e-1 & 2.46e-3 \\ \hline
+                                    第二次前： & -1.64e-1 & -3.96e-1 & -8.06e-3\\ \hline
+                                    第二次后： & -2.72e-1 & -3.19e-2 & -8.42e-3 \\ \hline
+                                    第三次前： & -1.71e-1 & -4.53e-1 & -8.84e-3 \\ \hline
+                                    第三次后： & -2.02e-1 & -1.50e-1 & -7.30e-3\\ \hline
+                                
+                                    
+                                \end{tabularx}
+                                \caption{质量比1.728，初始高度7.5cm}
+                                \label{form:1.728-7.5}
+                            \end{table}
+
+                 
+                        \item 质量比3.835，初始高度7.5cm
+                            \begin{figure}[H]
+                                \centering
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/4A.png}
+                                    \caption{小球A}
+                                    \label{fig:4A}
+                                \end{subfigure}
+                                \hfill
+                                \begin{subfigure}{0.45\textwidth}
+                                    \centering
+                                    \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/4C.png}
+                                    \caption{小球C}
+                                    \label{fig:4C}
+                                \end{subfigure}
+                                \caption{质量比3.835，初始高度7.5cm}
+                                \label{fig:3.835-7.5}
+                            \end{figure}
+                            \vfill
+                            \begin{table}[H]
+                                \centering
+                                \begin{tabularx}{\textwidth}{
+                                    || >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    | >{\centering\arraybackslash}X
+                                    ||
+                                }
+                                    \hline
+                                    碰撞次数 & 小球A速度(m/s) & 小球C速度(m/s) & 总动量(kg$\cdot$m/s)\\ \hline
+                                    第一次前： & 3.77e-1 & 0 & 1.13e-2 \\ \hline
+                                    第一次后： & 3.82e-1 & 1.69e-1 & 1.28e-2 \\ \hline
+                                    第二次前： & -9.98e-2 & -2.80e-1 & -5.21e-3\\ \hline
+                                    第二次后： & -1.94e-1 & -5.21e-2 & -6.25e-3 \\ \hline
+                                    第三次前： & 5.33e-2 & 8.85e-2 & 2. 30e-3 \\ \hline
+                                    第三次后： & -6.37e-2 & 1.49e-1 & -7.31e-4\\ \hline
+                                    
+                                \end{tabularx}
+                                \caption{质量比3.835，初始高度7.5cm}
+                                \label{form:3.835-7.5}
+                            \end{table}
+                    \end{enumerate}
+            \end{enumerate}
+        \subsection{实验结论}
+            \noindent\hspace{2em}
+                \begin{enumerate}[left=2em, label=\arabic*)]
+                    \item 在忽略空气阻力的情况下，可以认为机械能守恒。
+                    $$ E_{\text{before}} = E_{\text{after}} $$
+                    \item 在误差允许范围内，可以认为动量守恒。
+                    $$ m_1v_1 + m_2v_2 = m_1v_1' + m_2v_2' $$
+                \end{enumerate}
+    \section{机械振动与机械波实验}
+        \subsection{实验目的}
+            \begin{enumerate}[left=2em, label=(\arabic*)]
+                \item 理解简谐振动，机械波的概念。
+                \item 掌握估测小球运动轨迹和运动状态的方法；观测分析单个小球的简谐振动和多个小球形成的机械波。
+            \end{enumerate}
+        \subsection{实验原理}
+            \noindent\hspace{2em}以牛顿单摆为观测对象，观测分析小球的简谐振动；以不同摆长的牛顿摆为观测对象，观测分析多个小球形成的机械波。
+
+            \noindent\hspace{2em}速度和位置的测量通过钢尺+手机拍视频的方式进行数据采集，利用开源软件Tracker进行视频分析和小球速度、位置估计。
+        \subsection{实验仪器}
+            \noindent\hspace{2em}双线牛顿单摆、不同摆长的双线牛顿摆、钢卷尺、手机、计算机。
+        \subsection{实验步骤}
+            \begin{enumerate}[left=2em, label=(\arabic*)]
+                \item 放置双线单摆。
+                \item 将手机尽量垂直于小球摆动平面，在一定距离处固定好并开启录像功能。
+                \item 将钢尺平行于摆动平面并尽量靠近单摆放置。
+                \item 将小球置于某一高度并放开，令其进行自由摆动。
+                \item 用手机拍摄小球摆动视频，利用Tracker软件分析计算小球的位置、速度。
+                \item 改变小球初始高度、摆长进行多次实验。
+                \item 放置不同长度的多个单摆，将手机摄像头从侧上方对准多单摆。
+                \item 用长直尺将多摆中的所有小球侧推至同一角度后放开，令其进行自由摆动。
+                \item 用手机拍摄小球摆动视频，利用Tracker软件分析计算每个小球的位置、速度变化。进而分析多个小球形成的机械波的周期，频率变化。
+                \item 分析机械波的周期、频率与摆长的关系。
+            \end{enumerate}
+        \subsection{实验数据}
+            \begin{enumerate}[left=2em, label=\arabic*.]
+                \item 单个小球分析：
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/75.png}
+                        \caption{7.5cm高度}
+                        \label{fig:7.5cm}
+                    \end{figure}
+
+                    此情况
+                    $${v}_{max}=\SI{0.929}{m/s}$$
+                    小球的最大位移为
+                    $$x_{max}=\SI{0.132}{m}$$
+
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[height=0.5\textheight]{E:/files/working/latex/物理实验报告/image/95.png}
+                        \caption{9cm高度}
+                        \label{fig:9.5cm}
+                    \end{figure}
+
+
+                    此情况
+                    $${v}_{max}=\SI{0.964}{m/s}$$
+                    小球的最大位移为
+                    $$x_{max}=\SI{0.144}{m}$$
+
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[height=0.5\textheight]{E:/files/working/latex/物理实验报告/image/60.png}
+                        \caption{6cm高度}
+                        \label{fig:6cm}
+                    \end{figure}
+    
+                    此情况
+                    $${v}_{max}=\SI{0.452}{m/s}$$
+                    小球的最大位移为
+                    $$x_{max}=\SI{0.100}{m}$$
+
+                    数据如下：
+                    \begin{table}[H]
+                        \centering
+                        \begin{tabularx}{0.8\textwidth}{
+                        || >{\centering\arraybackslash}X
+                        | >{\centering\arraybackslash}X
+                        | >{\centering\arraybackslash}X
+                        ||
+                    }
+                        \hline
+                        初始高度(cm) & 最大位移(m) & 最大速度(m/s) \\ \hline
+                        6 & 0.100 & 0.452 \\ \hline
+                        7.5 & 0.132 & 0.929 \\ \hline
+                        9.5 & 0.144 & 0.964 \\ \hline
+                        \end{tabularx}
+                        \caption{不同高度速度位移的变化}
+                        \label{form1}
+                    \end{table}
+                    由此得小球的速度与初始高度正相关，与摆长无关；
+                    小球的位置与初始高度正相关，与摆长成负相关。
+                \item 多个小球分析：
+                    \begin{figure}[H]
+                        \centering
+                        \begin{subfigure}[h]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/A.png}
+                            \caption{球A}
+                            \label{1}
+                        \end{subfigure}
+                        \begin{subfigure}[h]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/B.png}
+                            \caption{球B}
+                            \label{2}
+                        \end{subfigure}
+                        \hfill
+                        \begin{subfigure}[h]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/C.png}
+                            \caption{球C}
+                            \label{3}
+                        \end{subfigure}
+                        \begin{subfigure}[h]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/D.png}
+                            \caption{球D}
+                            \label{4}
+                        \end{subfigure}
+                        \hfill
+                        \begin{subfigure}[h]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{E:/files/working/latex/物理实验报告/image/E.png}
+                            \caption{球E}
+                            \label{5}
+                        \end{subfigure}
+                    \end{figure}
+                    数据如下：
+                    \begin{table}[H]
+                        \centering
+                        \begin{tabularx}{0.8\textwidth}{
+                            || >{\centering\arraybackslash}X
+                            | >{\centering\arraybackslash}X
+                            | >{\centering\arraybackslash}X
+                            ||
+                        }
+                            \hline
+                            小球名称 & 摆长(m) & 周期(s) \\ \hline
+                            A & 0.185 & 0.866 \\ \hline
+                            B & 0.205 & 0.900 \\ \hline
+                            C & 0.210 & 0.917 \\ \hline
+                            D & 0.215 & 0.922 \\ \hline
+                            E & 0.220 & 0.933 \\ \hline
+                        \end{tabularx}
+                        \caption{机械波周期与摆长关系}
+                        \label{form2}
+                    \end{table}
+                    可得单摆的周期随摆长变长而增大，频率随摆长变长而减小。
+            \end{enumerate}
+        
+        \subsection{实验结论}
+            \begin{enumerate}[left=2em, label=\arabic*)]
+                \item 小球在$x$方向上的运动可以近似认为是简谐运动。
+                \item 小球速度与初始高度正相关，与摆长无关。
+                \item 小球位置与初始高度正相关，与摆长负相关。
+                \item 小球机械波周期与摆长正相关，频率相反。
+            \end{enumerate}
+            以上实验结果符合忽略空气阻力的位置公式：
+            \begin{equation*}
+                \begin{cases}
+                    \ l(1-cos(\theta)) = h \\
+                    \ lsin(\theta) = x
+                \end{cases}
+            \end{equation*}
+            以及小球速度公式（忽略空气阻力）：
+            \begin{equation*}
+                v = \sqrt{2gh}
+            \end{equation*}
+            多个小球分析则符合单摆周期公式：
+            \begin{equation*}
+                T = 2\pi \sqrt{\frac{l}{g}}
+            \end{equation*}
+\end{document}
