@@ -1,0 +1,1670 @@
+\documentclass[UTF8]{article}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\usepackage[zihao=-4]{ctex}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[hypcap=false]{subcaption}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{changepage}
+\usepackage{caption}
+\usepackage{chngcntr}
+\usepackage{wrapfig}
+\usepackage{diagbox}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage[a4paper, left=2cm, right=2cm]{geometry}
+
+\title{电路硬件实验}
+\author{202300120014 于坤航}
+\date{\today}
+
+\titleformat{\section}[hang]{\Large\centering\bfseries}{实验\chinese{section}}{1em}{}
+\titleformat{\subsection}[hang]{\zihao{-4}\bfseries}{\chinese{subsection}.}{1em}{}
+
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+\renewcommand{\baselinestretch}{1.5}
+\normalsize
+
+\setCJKfamilyfont{hwxk}{STXingkai}
+\newcommand{\huawenxingkai}{\CJKfamily{hwxk}}
+\setCJKfamilyfont{wryh}{Microsoft YaHei}
+\newcommand{\weiruanyahei}{\CJKfamily{wryh}}
+\setCJKfamilyfont{kt}{KaiTi}[AutoFakeBold=true]
+\renewcommand{\kaishu}{\CJKfamily{kt}}
+\setCJKfamilyfont{hwzs}[AutoFakeBold=true]{STZhongsong}
+\newcommand{\huawenzhongsong}{\CJKfamily{hwzs}}
+
+\setCJKmainfont[AutoFakeBold=true]{simsun.ttc}
+\begin{document}
+    \newlength{\imagewidth}
+    \settowidth{\imagewidth}{\includegraphics{image/logo.png}}
+    \begin{titlepage}
+        \thispagestyle{fancy}
+        \renewcommand{\headrulewidth}{0pt}
+        \fancyfoot[C]{\large Powered by \LaTeX}
+        \centering
+        \vspace*{1cm}
+        \begin{minipage}{\imagewidth}
+            \centering
+            \includegraphics[width=\textwidth]{image/logo.png}
+        \end{minipage}
+        \settowidth{\imagewidth}{\includegraphics{image/logo2.png}}
+        \begin{minipage}{\imagewidth}
+            \centering
+            \includegraphics[width=\textwidth]{image/logo2.png}
+        \end{minipage}
+        \par
+        \vspace{2cm}
+        {\zihao{2} \weiruanyahei  \textbf{信息科学与工程学院} \par}
+        \vspace{1cm}
+        {\zihao{4}  \kaishu \textbf{2023-2024学年第二学期} \par}
+        \vspace{1.5cm}
+        {\fontsize{50pt}{75pt} \huawenxingkai 实\qquad 验\qquad 报\qquad 告\par}
+        \vspace{1cm}
+        {
+            \begin{tabular}{cc}
+                \zihao{3} \weiruanyahei 实验课程名称：
+                & \zihao{-2} \huawenzhongsong 电路硬件实验 \\ \cline{2-2}
+            \end{tabular}
+        }
+        
+        \vspace*{2cm}
+
+        {\zihao{3}\kaishu
+            \begin{tabular}{cc}
+                专\quad 业\quad 班\quad 级：& 电子信息类6班 \\ \cline{2-2}
+                学\quad 生\quad 学\quad 号：& 202300120014 \\ \cline{2-2}
+                学\quad 生\quad 姓\quad 名：& 于坤航 \\ \cline{2-2}
+                实\quad 验\quad 时\quad 间：& 2024年3月-6月 \\ \cline{2-2}
+                指\quad 导\quad 教\quad 师：& 朱雪梅 \\ \cline{2-2}
+            \end{tabular}
+        \par}
+ 
+    \end{titlepage}
+    \thispagestyle{empty}
+    \newpage
+    \thispagestyle{empty}
+    \tableofcontents
+    \newpage
+    \pagestyle{plain}
+
+    \section{线性与非线性元件伏安特性的测绘}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 掌握线性电阻、非线性电阻元件伏安特性的逐点测试法。
+                \item 学习恒电源、直流电压表、电流表的使用方法。
+            \end{enumerate}
+        \subsection{原理说明}
+        \noindent\hspace{2em}
+            \begin{wrapfigure}{l}{0.3\textwidth}
+                \centering
+                \includegraphics[width=0.3\textwidth]{image/figure1-1.png}
+                \captionof{figure}{}
+            \end{wrapfigure}任一二端电阻元件的特性可用该元件上的端电压U与通过该元件的电流I之间的函数关系$U=
+            f(I)$来表示，即用 $U-I$ 平面上的一条曲线来表征，这条曲线称为该电阻元件的伏安特性曲线。根据
+            伏安特性的不同，电阻元件分两大类：线性电阻和非线性电阻。线性电阻元件的伏安特性曲线是一
+            条通过坐标原点的直线，如图1-1中（a）所示，
+            该直线的斜率只由电阻元件的电阻值$R$决定，其
+            阻值为常数，与元件两端的电压$U$和通过该元件的电流I无关；非线性电阻元件的伏安特性是一条
+            经过坐标原点的曲线，其阻值R不是常数，即在不同的电压作用
+            下，电阻值是不同的，常见的非线
+            性电阻如白炽灯丝、普通二极管、
+            稳压二极管等，它们的伏安特性如
+            图1-1中（b）、（c）、（d）。在图
+            1-1 中，$U > 0$ 的部分为正向特
+            性，$U < 0$的部分为反向特性。 
+            绘制伏安特性曲线通常采用
+            逐点测试法，即在不同的端电压作
+            用下，测量出相应的电流，然后逐
+            点绘制出伏安特性曲线，根据伏安
+            特性曲线便可计算其电阻值。
+            \newline
+        \subsection{实验设备}
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[b]{0.45\textwidth}
+                    \begin{enumerate}[label=\textbf{\arabic*}.]
+                        \item 直流电压、电流表； 
+                        \item 电压源（双路\textbf{0}～\SI{30}{V}可调）； 
+                        \item \textbf{EEL—52A}组件、弱电元件箱。
+                    \end{enumerate}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure1-2.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+        \subsection{实验内容}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 测定线性电阻的伏安特性\par
+                \noindent\hspace{2em}按图1-2接线，图中的电源$U$选用恒压源的可调稳压输出端，通过直流数字毫安表与$1k\Omega$线
+                性电阻相连，电阻两端的电压用直流数字电压表测量。
+                \par
+                \noindent\hspace{2em}调节恒压源可调稳压电源的输出电压$U$，从0伏开始缓慢地增加（不能超过10V），在表1-1
+                中记下相应的电压表和电流表的读数。
+                \begin{table}[H]
+                    \centering
+                    \captionof{table}{线性电阻伏安特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                        \hline
+                        $U(V)$ & 0 & 2 & 4 & 6 & 8 & 10 \\ \hline
+                        $I(mA)$ & 0 & 1.9 & 4.0 & 6.0 & 8.0 & 10.0 \\ \hline 
+                        
+                    \end{tabularx}
+                \end{table}
+                \item 测定6.3V白炽灯泡的伏安特性\par
+                \noindent\hspace{2em}将图1-2中的1kΩ线性电阻换成一只6.3V的灯泡，重复1的步骤，电压不能超过6.3V，在表
+                1-2中记下相应的电压表和电流表的读数。
+                \begin{table}[H]
+                    \centering
+                    \caption{6.3V白炽灯泡伏安特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                        \hline
+                        $U(V)$ & 0 & 1 & 2 & 3 & 4 & 5 & 6.3 \\ \hline
+                        $I(mA)$ & 0 & 27.7 & 36.9 & 47.4 & 65.5 & 75.4 & 83.0 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 测定半导体二极管的伏安特性
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.42\textwidth}
+                        \noindent\hspace{2em}按图1—3接线，$R$为限流电阻，取$200\Omega$（十进制可变
+                        电阻箱），二极管的型号为1N4007。测二极管的正向特性时，
+                        其正向电流不得超过25mA，二极管$VD$的正向压降可在0～
+                        0.75V之间取值。特别是在0.5～0.75之间更应取几个测量点；
+                        测反向特性时，将可调稳压电源的输出端正、负连线互换，调
+                        节可调稳压输出电压$U$，从0伏开始缓慢地减少（不能超过-30V）， 将数据分别记入表1-3和表1-4中。
+                    \end{minipage}
+                    \begin{minipage}[H]{0.5\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure1-3.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+
+                    \begin{table}[H]
+                        \centering
+                        \captionof{table}{二极管正向特性实验数据}
+                        \begin{tabularx}{\textwidth}{
+                            |>{\centering\arraybackslash}l
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X|
+                        }
+                        \hline
+                        $U(V)$ & 0 & 0.2 & 0.4 & 0.45 & 0.5 & 0.55 & 0.6 & 0.65 & 0.7 & 0.75 \\ \hline
+                        $I(\si{\milli\ampere})$ & 0 & 0 & 0 & 0 & 0.1 & 0.2 & 0.3 & 0.4 & 0.6 & 0.8 \\ \hline
+                        \end{tabularx}
+                    \end{table}
+                    \begin{table}[H]
+                        \centering
+                        \captionof{table}{二极管反向特性实验数据}
+                        \begin{tabularx}{\textwidth}{
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X
+                            |>{\centering\arraybackslash}X|
+                        }
+                        \hline
+                        $U(V)$ & 0 & -5 & -10 & -15 & -20 \\ \hline
+                        $I(mA)$ & 0 & 0 & 0 & 0 & 0 \\ \hline
+                        \end{tabularx}
+                    \end{table}
+                \item 测定稳压管的伏安特性\par
+                \noindent\hspace{2em}将图1—3中的二极管1N4007换成稳压管2CW51，重复实验内容3的测量，其正、反向电流
+                不得超过$±20mA$，将数据分别记入表1-５和表1-６中。
+                \begin{table}[H]
+                    \centering
+                    \captionof{table}{}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $U(V)$ & 0 & 0.2 & 0.4 & 0.45 & 0.5 & 0.55 & 0.6 & 0.65 & 0.7 & 0.75 \\ \hline
+                    $I(\si{\milli\ampere})$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.1 & 0.2 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \begin{table}[H]
+                    \centering
+                    \captionof{table}{}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $U(V)$ & 0 & -1 & -1.5 & -2 & -2.5 & -2.8 & -3 & -3.2 & -3.5 & -3.55 \\ \hline
+                    $I(\si{\milli\ampere})$ & 0 & 0 & 0 & 0.2 & 0.7 & 1.3 & 2.1 & 2.2 & 3.1 & 3.3 \\ \hline
+                    \end{tabularx}
+                \end{table}
+            \end{enumerate}
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 测量时，可调稳压电源的输出电压由0缓慢逐渐增加，应时刻注意电压表和电流表，不能超
+                过规定值。
+                \item 稳压电源输出端切勿碰线短路。
+                \item 测量中，随时注意电流表读数，及时更换电流表量程，勿使仪表超量程。
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 线性电阻与非线性电阻的伏安特性有何区别？它们的电阻值与通过的电流有无关系？\newline
+                A: 线性电阻的$U-I$图为直线，电阻值与电流无关；非线性电阻的$U-I$图为曲线，电阻值与电流有关。
+                \item 如何计算线性电阻与非线性电阻的电阻值？\newline
+                A: 线性电阻的电阻值为$R = \frac{U}{I}$，非线性电阻的电阻值为$R = \frac{\Delta U}{\Delta I}$。
+                \item 请举例说明哪些元件是线性电阻，哪些元件是非线性电阻，它们的伏安特性曲线是什么形状？\newline
+                A: 线性电阻是电阻值不随电流变化的电阻，如金属电阻；非线性电阻是电阻值随电流变化的电阻，如白炽灯。
+                \item 设某电阻元件的伏安特性函数式为$I = f(U)$，如何用逐点测试法绘制出伏安特性曲线。\newline
+                A: 在不同的电压下测量电流，然后绘制出伏安特性曲线。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据实验数据，分别在方格纸上绘制出各个电阻的伏安特性曲线。
+                \begin{figure}[H]
+                    \centering
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure1-4-1.png}
+                        \caption{线性电阻}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure1-4-2.png}
+                        \caption{白炽灯}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure1-4-3.png}
+                        \caption{二极管}
+                        
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure1-4-4.png}
+                        \caption{稳压管}
+                    \end{subfigure}
+                    \caption{伏安特性曲线}
+                \end{figure}
+                
+                \item 根据伏安特性曲线，计算线性电阻的电阻值，并与实际电阻值比较。\newline
+                A: 线性电阻的电阻值为$R = \frac{U}{I}$，实际电阻值为$1k\Omega$。
+                \item 根据伏安特性曲线，计算白炽灯在额定电压（\SI{6.3}{V}）时的电阻值，当电压降低 20％时，阻
+                值为多少？ 
+                A: 额定电压时电阻值为$R = \frac{U}{I} = \frac{6.3}{83} \times 1000 = \SI{75.90}{\ohm}$，
+                降低20\%时电阻值为$\frac{5}{75.3} \times 1000 = \SI{66.40}{\ohm}$。
+                \item 回答思考题1。\newline
+                A: 见预习与思考题。
+            \end{enumerate}
+    \section{电位、电压的测定及电路电位图的绘制}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 学会测量电路中各点电位和电压的方法，理解电位的相对性和电压的绝对性。
+                \item 学会电路电位图的测量、绘制方法。
+                \item 掌握使用直流稳压电源、直流电压表的使用方法。
+            \end{enumerate}
+        \subsection{原理说明}
+            \noindent\hspace{2em}在一个确定的闭合电路中，各点电位的大小视所选的电位参考点的不同而异，但任意两点之间
+            的电压（即两点之间的电位差）则是不变的，这一性质称为电位的相对性和电压的绝对性。据此性
+            质，我们可用一只电压表来测量出电路中各点的电位及任意两点间的电压。 
+            \par
+            \noindent\hspace{2em}若以电路中的电位值作纵坐标，电路中各点位置（电阻或电源）作横坐标，将测量到的各点电
+            位在该坐标平面中标出，并把标出点按顺序用直线条相连接，就可得到电路的电位图，每一段直线
+            段即表示该两点电位的变化情况。而且，任意两点的电位变化，即为该两点之间的电压。
+            \par
+            \noindent\hspace{2em}在电路中，电位参考点可任意选定，对于不同的参考点，所绘出的电位图形是不同，但其各点
+            电位变化的规律却是一样的。 
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 直流电压、电流表； 
+                \item 电压源（双路0～\SI{30}{V}可调）；
+                \item EEL-51S组件、弱电元件箱组件。
+            \end{enumerate}
+        \subsection{实验内容}
+            \noindent\hspace{2em}实验电路如图2-1所示，图中的电源US1用恒压源I路0～＋30V可调电源输出端，并将输出
+            电压调到＋6V，US2用II路0～＋30V可调电源输出端，并将输出电压调到＋12V。
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.5\textwidth]{image/figure2-1.png}
+                \caption{}
+            \end{figure}
+            \begin{enumerate}
+                \item 测量电路中各点电位\par
+                \noindent\hspace{2em}以图2-1中的A点作为电位参考点，分别测量B、C、D、E、F各点的电位。
+                \par
+                \noindent\hspace{2em}用电压表的黑笔端插入A点，红笔端分别插入B、C、D、E、F各点进行测量，数据记入表2-1中。
+                \par
+                \noindent\hspace{2em}以D点作为电位参考点，重复上述步骤，测得数据记入表2-1中。
+                \item 测量电路中相邻两点之间的电压值
+                \par
+                \noindent\hspace{2em}在图2-1中，测量电压$U_{AB}$：将电压表的红笔端插入A点，黑笔端插入B点，读电压表读数，
+                记入表2-1中。按同样方法测量$U_{BC}$、$U_{CD}$、$U_{DE}$、$U_{DF}$及$U_{FA}$，测量数据记入表2-1中。
+                \begin{table}[H]
+                    \centering
+                    \caption{电路中各点电位和电压数据\quad 单位：V }
+                    \small
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                        \hline
+                        电位参考点 & $V_A$ & $V_B$ & $V_C$ & $V_D$ & $V_E$ & $V_F$ & $U_{AB}$ & $U_{BC}$ & $U_{CD}$ & $U_{DE}$ & $U_{DF}$ & $U_{FA}$ \\ \hline
+                        A & 0 & 5.97 & -6.01 & -4.03 & -5.02 & 0.98 & -5.97 & 12.00 & -1.98 & 0.98 & -6.01 & 0.98 \\ \hline
+                        D & 4.03 & 10.01 & -1.98 & 0 & -0.98 & 5.02 & -5.97 & 11.99 & -1.98 & 0.98 & -6.00 & 0.99 \\ \hline    
+                    \end{tabularx}
+                \end{table}
+                
+            \end{enumerate}
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 实验电路中使用的电源US2用0～＋\SI{30}{V}可调电源输出端，应将输出电压调到＋12V后，再
+                接入电路中。并防止电源输出端短路。 
+                \item 使用数字直流电压表测量电位时，用黑笔端插入参考电位点，红笔端插入被测各点，若显示
+                正值，则表明该点电位为正（即高于参考点电位）；若显示负值，表明该点电位为负（即该点电位低
+                于参考点电位）。
+                \item 使用数字直流电压表测量电压时，红笔端插入被测电压参考方向的正（＋）端，黑笔端插入
+                被测电压参考方向的负（-）端，若显示正值，则表明电压参考方向与实际方向一致；若显示负值，
+                表明电压参考方向与实际方向相反。 
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 电位参考点不同，各点电位是否相同？任两点的电压是否相同，为什么？\newline
+                A: 电位参考点不同，各点电位不同；任两点的电压相同，因为电压是两点电位的差值。
+                \item 在测量电位、电压时，为何数据前会出现±号，它们各表示什么意义？\newline
+                A: ±号表示电位或电压的正负，正表示高于参考点，负表示低于参考点。
+                \item 什么是电位图形？不同的电位参考点电位图形是否相同？如何利用电位图形求出各点的电位
+                和任意两点之间的电压？\newline
+                A: 电位图形是将电路中各点的电位用图形表示出来，通常使用水平线来表示电位相等的点，这些水平线称为等电位线，竖直线代表一个点。电位图形中的每一条线都代表一个特定的电位值。
+                如果改变参考点，电位图形上的电位值也会相应改变，但电位之间的差值，即电压，不会改变。
+                首先读取一个点的电位值，然后读取另一个点的电位值，则有$U_{AB}=V_A - V_B$。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据实验数据，分别绘制出电位参考点为A点和D点的两个电位图形。
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.5\textwidth]{image/figure2-2.png}
+                    \caption{电位图形}
+                \end{figure}
+                \item 根据电路参数计算出各点电位和相邻两点之间的电压值，与实验数据相比较，对误差作必要
+                的分析。\newline
+                A: 电位参考点为A点时，$V_B = 6V$，$V_C = -6V$，$V_D = -4V$，$V_E = -5V$，$V_F = 1V$，
+                $U_{AB} = -6V$，$U_{BC} = 12V$，$U_{CD} = -2V$，$U_{DE} = 1V$，$U_{DF} = -6V$，$U_{FA} = 1V$。
+                误差分析：由于电流表分压，电压表分流，实际测量值与理论值有一定的误差。
+            \end{enumerate}
+    \section{线性电路叠加性和齐次性验证}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 验证叠加原理。
+                \item 了解叠加原理的应用场合。 
+                \item 理解线性电路的叠加性。
+            \end{enumerate}
+        \subsection{原理说明}
+            \noindent\hspace{2em}叠加原理指出：在有几个电源共同作用下的线性电路中，通过每一个元件的电流或其两端的电压，
+            可以看成是由每一个电源单独作用时在该元件上所产生的电流或电压的代数和。具体方法是：一个电
+            源单独作用时，其它的电源必须去掉（电压源短路，电流源开路）；在求电流或电压的代数和时，当
+            电源单独作用时电流或电压的参考方向与共同作用时的参考方向一致时，符号取正，否则取负。在图
+            3-1中： 
+            $$I_1 = I_1' - I_1'' \qquad I_2 = -I_2' + I_2'' \qquad I_3 = I_3' + I_3'' \qquad U = U' + U''$$
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=\textwidth]{image/figure3-1.png}
+                \caption{}
+            \end{figure}
+            \par
+            \noindent\hspace{2em}叠加原理反映了线性电路的叠加性，线性电路的齐次性是指当激励信号（如电源作用）增加或
+            减小Ｋ倍时，电路的响应（即在电路其它各电阻元件上所产生的电流和电压值）也将增加或减小K
+            倍。叠加性和齐次性都只适用于求解线性电路中的电流、电压。对于非线性电路，叠加性和齐次性
+            都不适用。
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 直流数字电压表、直流数字电流表；
+                \item 恒压源（双路0～30V可调）； 
+                \item EEL-51S组件、弱电元件箱组件。
+            \end{enumerate}
+        \subsection{实验内容}
+            \noindent\hspace{2em}
+            实验电路如图4-2所示，图中：$R_1 = R_3 = R_4 = \SI{510}{\ohm}, R_2 = \SI{1}{k\ohm}, R_5 = \SI{330}{\ohm}$,图中的电源
+            $U_{S1}$用恒压源I路0～＋30V可调电压输出端，并将输出电压调到＋12V，$U_{S2}$用恒压源II路0～＋30V
+            可调电压输出端，并将输出电压调到＋6V（以直流数字电压表读数为准），开关$S_3$投向$R_3$侧。
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item $U_{S1}$电源单独作用（将开关$S_1$投向$U_{S1}$侧，开关$S_2$投向短路侧），参考图3-1（b），画出
+                电路图，标明各电流、电压的参考方向。 
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.5\textwidth]{image/figure3-2.png}
+                    \caption{}
+                \end{figure}
+                \par
+                \noindent\hspace{2em}用直流数字毫安表接电流插头测量各支路电流：将电流插头的红接线端插入数字电流表的红
+                （正）接线端，电流插头的黑接线端插入数字电流表的黑（负）接线端，测量各支路电流，按规定：
+                在结点A，电流表读数为‘＋’，表示电流流入结点，读数为‘-’，表示电流流出结点，然后根据电路
+                中的电流参考方向，确定各支路电流的正、负号，并将数据记入表3—１中。 
+                \par
+                \noindent\hspace{2em}用直流数字电压表测量各电阻元件两端电压：电压表的红（正）接线端应插入被测电阻元件电压
+                参考方向的正端，电压表的黑（负）接线端插入电阻元件的另一端（电阻元件电压参考方向与电流参
+                考方向一致），测量各电阻元件两端电压，数据记入表3—１中。 
+                \begin{table}[H]
+                    \centering
+                    \caption{实验数据一}
+                    \zihao{-5}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    \diagbox[width=5cm, height=2cm]{实验内容}{测量项目} & $U_{S1}$ (V) & $U_{S2}$ (V) & $I_1$ (mA) & $I_2$ (mA) & $I_3$ (mA) & $U_{AB}$ (V) 
+                    & $U_{CD}$ (V) & $U_{AD}$ (V) & $U_{DE}$ (V) & $U_{FA}$ (V) \\ \hline
+                    $U_{S1}$单独作用 & 12 & 0 & 8.6 & -2.4 & 6.2 & 2.38 & 0.79 & 3.17 & 4.41 & 4.41 \\ \hline
+                    $U_{S2}$单独作用（6V） & 0 & 6 & -1.2 & 3.5 & 2.2 & -3.58 & -1.18 & 1.21 & -0.61 & -0.6 \\ \hline
+                    $U_{S1},U_{S2}$共同作用 & 12 & 6 & 7.4 & 1.1 & 8.6 & -1.2 & -0.39 & 4.41 & 3.8 & 3.8 \\ \hline
+                    $U_{S2}$单独作用（12V） & 0 & 12 & -2.4 & 7.2 & 4.7 & -7.16 & -2.38 & 2.44 & -1.22 & -1.22 \\ \hline
+                        
+                    \end{tabularx}
+                \end{table}
+                \item $U_{S2}$电源单独作用（将开关$S_1$投向短路侧，开关$S_2$投向$U_{S2}$侧），画出电路图，标明各电流、
+                电压的参考方向。
+                \par
+                \noindent\hspace{2em}重复步骤1的测量并将数据记录记入表格3—1中。
+                \item $U_{S1}$和$U_{S2}$共同作用时（开关$S_1$和$S_2$分别投向$U_{S1}$和$U_{S2}$侧），各电流、电压的参考方向见
+                图3-2。
+                \par
+                \noindent\hspace{2em}完成上述电流、电压的测量并将数据记录记入表格3—1中。
+                \item 将开关$S_{3}$投向二极管VD侧，即电阻$R_{5}$换成一只二极管1N4007，重复步骤1～3的测量
+                过程，并将数据记入表3—2中。
+                \begin{table}[H]
+                    \centering
+                    \caption{实验数据二}
+                    \zihao{-5}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    \diagbox[width=5cm, height=2cm]{实验内容}{测量项目} & $U_{S1}$ (V) & $U_{S2}$ (V) & $I_1$ (mA) & $I_2$ (mA) & $I_3$ (mA) & $U_{AB}$ (V) 
+                    & $U_{CD}$ (V) & $U_{AD}$ (V) & $U_{DE}$ (V) & $U_{FA}$ (V) \\ \hline
+                    $U_{S1}$单独作用 & 12 & 0 & 8.7 & -2.5 & 6.1 & 2.5 & 0.63 & 3.13 & 4.43 & 4.43 \\ \hline
+                    $U_{S2}$单独作用（6V） & 0 & 6 & 0 & 0 & 0 & 0 & -6.01 & 0 & 0 & 0 \\ \hline
+                    $U_{S1},U_{S2}$共同作用 & 12 & 6 & 7.8 & 0 & 7.8 & 0 & -2.01 & 4.0 & 4.0 & 3.99 \\ \hline
+                    $U_{S2}$单独作用（12V） & 0 & 12 & 0 & 0 & 0 & 0 & -12.0 & 0 & 0 & 0 \\ \hline
+                        
+                    \end{tabularx}
+                \end{table}    
+            
+            \end{enumerate}
+
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 用电流插头测量各支路电流时，应注意仪表的极性，及数据表格中“＋、-”号的记录。
+                \item 注意仪表量程的及时更换。
+                \item 电压源单独作用时，去掉另一个电源，只能在实验板上用开关$S_1$或$S_2$操作，而不能直接
+                将电压源短路。 
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 叠加原理中$U_{S1}$, $U_{S2}$分别单独作用，在实验中应如何操作？可否将要去掉的电源（$U_{S1}$或${U_{S2}}$）
+                直接短接？\newline
+                A: 电源单独作用时，应将另一个电压源短路，电流源开路，而不能直接短接。
+                \item 实验电路中，若有一个电阻元件改为二极管，试问叠加性还成立吗？为什么？\newline
+                A: 二极管为非线性元件，叠加性不成立。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据表3-1实验数据一，通过求各支路电流和各电阻元件两端电压，验证线性电路的叠加
+                性与齐次性。\newline
+                A:第一列数据加第二列数据约等于第三列数据；第四列数据约为第二列数据的2倍。
+                \item 各电阻元件所消耗的功率能否用叠加原理计算得出？试用上述实验数据计算、说明。\newline
+                A: 不能，功率不具有叠加性。由于电压电流满足叠加性，即$U = U_1 + U_2, I = I_1 + I_2$，但是$P = UI = (U_1+U_2)(I_1+I_2) \neq U_1 I_1+U_2 I_2$
+                \item 根据表3-1实验数据一，当$U_{S1} = U_{S2} = \SI{12}{V}$时，用叠加原理计算各支路电流和各电阻元件
+                两端电压。 \newline
+                A: $U_{S1} = \SI{12}{V}$, $U_{S2} = \SI{12}{V}$, $I_1 = 6.4mA$, $I_2 = 4.8mA$, $I_3 = 11.1mA$, 
+                $U_{AB} = -4.78V$, $U_{CD} = -1.59V$, $U_{AD} = 5.61V$, $U_{DE} = 3.19V$, $U_{FA} = 3.19V$。
+                \item 根据表3-2实验数据二，说明叠加性和齐次性是否适用该实验电路。\newline
+                A: 不适用，第一列数据加第二列数据与第三列数据相差很大。
+            \end{enumerate}
+    \section{电压源、电流源及其电源等效变换}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 掌握建立电源模型的方法。
+                \item 掌握电源外特性的测试方法。
+                \item 加深对电压源和电流源特性的理解。 
+                \item 研究电源模型等效变换的条件。
+            \end{enumerate}
+        \subsection{原理说明}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 电压源和电流源\par
+                \noindent\hspace{2em}电压源具有端电压保持恒定不变，而输出电流的大小由负载决定的特性。其外特性，即端电压
+                $U$与输出电流$I$的关系$U = f(I)$是一条平行于I轴的直线。实验中使用的恒压源在规定的电流范
+                围内，具有很小的内阻，可以将它视为一个电压源。
+                \par
+                \noindent\hspace{2em}电流源具有输出电流保持恒定不变，而端电压的大小由负载决定的特性。其外特性，即输出电
+                流$I$与端电压$U$的关系$I = f(U)$是一条平行于$U$轴的直线。实验中使用的恒流源在规定的电流范
+                围内，具有极大的内阻，可以将它视为一个电流源。
+                \item 实际电压源和实际电流源\par
+                \noindent\hspace{2em}实际上任何电源内部都存在电阻，通常称为内阻。因而，实际电压源可以用一个内阻$R_S$和电压
+                源$U_S$串联表示，其端电压$U$随输出电流
+                $I$增大而降低。在实验中，可以用一个小阻值的电阻与恒压
+                源相串联来模拟一个实际电压源。 
+                \par
+                \noindent\hspace{2em}实际电流源是用一个内阻$R_S$和电流源$I_S$并联表示，其输出电流$I$随端电压$U$增大而减小。在
+                实验中，可以用一个大阻值的电阻与恒流源相并联来模拟一个实际电流源。 
+                \item 实际电压源和实际电流源的等效互换\par
+                \noindent\hspace{2em}一个实际的电源，就其外部特性而言，既可以看成是一个电压源，又可以看成是一个电流源。
+                若视为电压源，则可用一个电压源$U_S$与一个电阻$R_S$相串联表示；若视为电流源，则可用一个电流
+                源$I_S$与一个电阻$R_S$相并联来表示。若它们向同样大小的负载供出同样大小的电流和端电压，则称
+                这两个电源是等效的，即具有相同的外特性。\newline
+                实际电压源与实际电流源等效变换的条件为：
+                \begin{enumerate}[label=(\textbf{\arabic*})]
+                    \item 取实际电压源与实际电流源的内阻均为$R_S$；
+                    \item 已知实际电压源的参数为$U_S$和$R_S$，则实际电流源的参数为$I_S = \frac{U_S}{R_S}$和$R_S$；
+                    若已知实际电流源的参数为$I_S$和$R_S$，则实际电压源的参数为$U_S = I_S R_S$和$R_S$。
+
+                \end{enumerate}
+            \end{enumerate}
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 直流数字电压表、直流数字电流表；
+                \item 恒压源（双路0～30V可调）；
+                \item 恒流源（0～200mA可调）；
+                \item EEL-51S组件、弱电元件箱。
+            \end{enumerate}
+        \subsection{实验内容}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 测定电压源（恒压源）与实际电压源的外特性
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}{0.5\textwidth}
+                        \raggedright
+                        \noindent\hspace{2em}实验电路如图4-1 所示，图中的电源$U_S$用恒压源
+                        0～＋30V可调电压输出端，并将输出电压调到＋6V，$R_1$
+                        取200Ω的固定电阻，$R_2$取470Ω的电位器。调节电位器
+                       $R_2$，令其阻值由大至小变化，将电流表、电压表的读数记
+                        入表4-1中。 
+                    \end{minipage}
+                    \begin{minipage}{0.5\textwidth}
+                        
+                    \end{minipage}
+                \end{adjustwidth}
+                \begin{table}[H]
+                    \centering
+                    \caption{电压源（恒压源）外特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $I$(mA) & 5.0 & 6.0 & 12.0 & 18.0 & 24.1 & 29.8 \\ \hline
+                    $U$(V) & 6.03 & 6.03 & 6.02 & 6.02 & 6.01 & 6.01 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.4\textwidth}
+                        \raggedright
+                        \noindent\hspace{2em}在图4-1 电路中，将电压源改成实际电压源，如图4-
+                        2所示，图中内阻$R_S$取\SI{51}{\ohm}的固定电阻，调节电位器$R_2$，
+                        令其阻值由大至小变化，将电流表、电压表的读数记入表4-
+                        2中。
+                    \end{minipage}
+                    \begin{minipage}[H]{0.5\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-2.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+                \begin{table}[H]
+                    \centering
+                    \caption{电压源（恒压源）外特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $I$(mA) & 5.8 & 8.8 & 11.9 & 14.8 & 17.7 & 20.7 & 23.8\\ \hline
+                    $U$(V) & 5.74 & 5.58 & 5.42 & 5.27 & 5.12 & 4.97 & 4.8\\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 测定电流源（恒流源）与实际电流源的外特性
+               
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.4\textwidth}
+                        \raggedright
+                        \noindent\hspace{2em}按图4-3接线，图中$I_S$为恒流源，调节其输出为5mA（用
+                        毫安表测量），$R_2$取\SI{470}{\ohm}的电位器，在$R_S$分别为\SI{1}{k\ohm}和$\infty$两
+                        种情况下，调节电位器$R_2$，令其阻值由大至小变化，将电流表、
+                        电压表的读数记入自拟的数据表格中。
+                    \end{minipage}
+                    \begin{minipage}[H]{0.5\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-3.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+                \item 研究电源等效变换的条件
+                \par
+                \noindent\hspace{2em}按图4-4电路接线，其中(a)、(b)图中的内阻$R_S$均为\SI{51}{\ohm}，负载电阻$R$均为\SI{200}{\ohm}。 
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.4\textwidth}
+                        \raggedright
+                        \noindent\hspace{2em} 在图4-4 (a)电路中，$U_S$用恒压源0～＋30V可调电压输出端，并将输出电压调到＋
+                        6V，记录电流表、电压表的读
+                        数。然后调节图4-4 (b)电路
+                        中恒流源$I_S$，令两表的读数与
+                        图 4-4(a)的数值相等，记录
+                        $I_S$之值，验证等效变换条件的
+                        正确性。
+                    \end{minipage}
+                    \begin{minipage}[H]{0.5\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-4.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+ 
+            \end{enumerate}
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 在测电压源外特性时，不要忘记测空载（$I=0$）时的电压值；测电流源外特性时，不要忘记
+                测短路（$U=0$）时的电流值，注意恒流源负载电压不可超过20V，负载更不可开路。
+                \item 换接线路时，必须关闭电源开关。 
+                \item 直流仪表的接入应注意极性与量程。 
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 电压源的输出端为什么不允许短路？电流源的输出端为什么不允许开路？ \newline
+                A: 电压源的输出端短路会导致电流无限大，电流源的输出端开路会导致电压无限大。
+                \item 说明电压源和电流源的特性，其输出是否在任何负载下能保持恒值？\newline
+                A: 电压源的输出电压在任何负载下能保持恒值，电流源的输出电流在任何负载下能保持恒值。
+                \item 实际电压源与实际电流源的外特性为什么呈下降变化趋势，下降的快慢受哪个参数影响？\newline
+                A: 实际电压源与实际电流源的外特性呈下降变化趋势是由于内阻的存在，下降的快慢受内阻的大小影响。
+                \item 实际电压源与实际电流源等效变换的条件是什么？所谓‘等效’是对谁而言？电压源与电流源
+                能否等效变换？ \newline
+                A: 实际电压源与实际电流源等效变换的条件是内阻相等，等效是对外部负载而言，电压源与电流源不能等效变换，其内阻相当于$0$和$\infty$。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据实验数据绘出电源的四条外特性，并总结、归纳两类电源的特性。
+                \begin{figure}[H]
+                    \centering
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-5-1.png}
+                        \caption{理想电压源}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-5-2.png}
+                        \caption{实际电压源}
+                    \end{subfigure}
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-5-3.png}
+                        \caption{理想电流源}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure4-5-4.png}
+                        \caption{实际电流源}
+                    \end{subfigure}
+                    \caption{电源外特性}
+                \end{figure}
+                A: 理想电压源的外特性为一条平行于$I$轴的直线，实际电压源的外特性为一条下降的直线；
+                理想电流源的外特性为一条平行于$U$轴的直线，实际电流源的外特性为一条下降的直线。
+                \item 从实验结果，验证电源等效变换的条件。\newline
+                A: 电源等效变换的条件为内阻相等，实验结果验证了这一条件。
+                \item 回答思考题。\newline
+                A: 见预习与思考题。
+            \end{enumerate}
+    \section{戴维南定理和诺顿定理的验证}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 验证戴维南定理、诺顿定理的正确性，加深对该定理的理解。 
+                \item 掌握测量有源二端网络等效参数的一般方法。
+            \end{enumerate}
+        \subsection{实验原理}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 戴维南定理和诺顿定理
+                \par
+                \noindent\hspace{2em}戴维南定理指出：任何一个有源二端网络如图 5－1（a），总可以用一个电压源$U_S$和一个电阻
+                $R_S$串联组成的实际电压源来代替如图 5－1（b），其中：电压源 US等于这个有源二端网络的开路电
+                压$U_{OC}$, 内阻$R_S$等于该网络中所有独立电源均置零（电压源短接，电流源开路）后的等效电阻$R_O$。
+                \par
+                \noindent\hspace{2em}诺顿定理指出：任何一个有源二端网络如图 5－1（a），总可以用一个电流源$I_S$和一个电阻$R_S$
+                并联组成的实际电流源来代替如图5－1（c），其中：电流源$I_S$等于这个有源二端网络的短路电源$I_{SC}$, 
+                内阻$R_S$等于该网络中所有独立电源均置零(电压源短接，电流源开路)后的等效电阻$R_O$。 
+                \par
+                \noindent\hspace{2em}$U_S$、$R_S$和$I_S$、$R_S$称为有源二端网络的等效参数。
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{image/figure5-1.png}
+                    \caption{戴维南定理和诺顿定理}
+                \end{figure}
+                \item 有源二端网络的等效参数的测量方法
+                \begin{enumerate}[label=(\textbf{\arabic*})]
+                    \item 开路电压、短路电流法
+                    \par
+                    \noindent\hspace{2em}在有源二端网络输出端开路时，用电压表直接测其输出端的开路电压$U_OC$, 然后再将其输出端
+                    短路，测其短路电流$I_SC$，且内阻为：$R_S = \frac{U_{OC}}{I_{SC}}$。
+                    \par
+                    \noindent\hspace{2em}若有源二端网络的内阻值很低时，则不宜测其短路电流。
+                    \item 伏安法
+                    \begin{adjustwidth}{0em}{0em}
+                        \begin{minipage}[H]{0.5\textwidth}
+                            \raggedright
+                            \noindent\hspace{2em}一种方法是用电压表、电流表测出有源二端网络的
+                            外特性曲线，如图5－2所示。开路电压为$U_OC$，根据外
+                            特性曲线求出斜率$tg(\phi)$，则内阻为：
+                            \begin{equation*}
+                                R_S = tg(\phi) = \frac{\Delta U}{\Delta I}
+                            \end{equation*}
+                            \noindent\hspace{2em}另一种方法是测量有源二端网络的开路电压 $U_OC$，
+                            以及额定电流$I_N$和对应的输出端额定电压$U_N$，如图 5-1所示，则内阻为：
+                            \begin{equation*}
+                                R_S = \frac{U_{OC} - U_N}{I_N}
+                            \end{equation*}
+                        \end{minipage}
+                        \begin{minipage}[H]{0.4\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure5-2.png}
+                            \captionof{figure}{}
+                        \end{minipage}
+                    \end{adjustwidth}
+                    \item 半电压法
+                    \par
+                    \noindent\hspace{2em}如图5－3所示，当负载电压为被测网络开路电压$U_OC$一半时，负载电阻$R_L$的大小（由电阻箱的读数确定）
+                    即为被测有源二端网络的等效内阻$R_S$数值。 
+                    \begin{adjustwidth}{0em}{0em}
+                        \centering
+                        \begin{minipage}[H]{0.4\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure5-3.png}
+                            \captionof{figure}{}
+                        \end{minipage}
+                        \hfill
+                        \begin{minipage}[H]{0.4\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure5-4.png}
+                            \captionof{figure}{}
+                        \end{minipage}
+                    \end{adjustwidth}
+                    \item 零示法
+                    \par
+                    \noindent\hspace{2em}在测量具有高内阻有源二端网络的开路电压时，用电压表进行直接测量会造成较大的误差，为
+                    了消除电压表内阻的影响，往往采用零示测量法，如图5－4所示。零示法测量原理是用一低内阻的
+                    恒压源与被测有源二端网络进行比较，当恒压源的输出电压与有源二端网络的开路电压相等时，电
+                    压表的读数将为“0”，然后将电路断开，测量此时恒压源的输出电压$U$，即为被测有源二端网络的开
+                    路电压。
+                \end{enumerate}
+            \end{enumerate}
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 直流数字电压表、直流数字电流表； 
+                \item 恒压源（双路0～30V可调）
+                \item 恒源流（0～200mA可调）； 
+                \item 弱电元件箱；
+                \item EEL-51S组件。
+            \end{enumerate}
+        \subsection{实验内容}
+            \noindent 被测有源二端网络如图5-5所示。
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.8\textwidth]{image/figure5-5.png}
+                \caption{}
+            \end{figure}
+            \begin{enumerate}
+                \item 在图5-5所示线路接入恒压源$U_S=\SI{12}{V}$和恒流源$I_S=\SI{20}{mA}$及可变电阻$R_L$。
+                \par
+                \noindent\hspace{2em}测开路电压$U_OC$：在图5－5电路中，断开负载$R_L$，用电压表测量开路电压$U_OC$，将数据记
+                入表5－1中。 
+                \par
+                \noindent\hspace{2em}测短路电流$I_{SC}$：在图5－5电路中，将负载$R_L$短路，用电流表测量短路电流$I_{SC}$
+                ，将数据记入表5－1中。 
+                \begin{table}[H]
+                    \centering
+                    \caption{}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $U_{OC}$ & $I_{SC}$ & $R_S=\frac{U_{OC}}{I_{SC}}$ \\ \hline
+                    1.61 & 3.1 & 519 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 负载实验
+                \par
+                \noindent\hspace{2em}测量有源二端网络的外特性：在图5－5电路中，改变负载电阻$R_L$的阻值，逐点测量对应的电
+                压、电流，将数据记入表5－6中。并计算有源二端网络的等效参数$U_S$和$R_S$。 
+                \begin{table}[H]
+                    \centering
+                    \caption{}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    $R_L$ (档位)& a & b & c & d & e & f & g \\ \hline
+                    $U(V)$ & 0 & 0.28 & 0.57 & 0.74 & 0.88 & 0.97 & 1.04 \\ \hline
+                    $I(mA)$ & 3.1 & 2.5 & 2 & 1.7 & 1.4 & 1.2 & 1.1 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 验证戴维南定理 
+                \par
+                \noindent\hspace{2em}测量有源二端网络等效电压源的外特性：图5－1(b)电路是图5－5的等效电压源电路，图中，
+                电压源$U_S$用恒压源的可调稳压输出端，调整到表5－1中的$U_OC$数值，内阻$R_S$按表5－1中计算
+                出来的$R_S$（取整）选取固定电阻。然后，用电阻箱改变负载电阻$R_L$的阻值，逐点测量对应的电压、
+                电流，将数据记入表5－3中。
+                \begin{table}[H]
+                    \centering
+                    \caption{有源二端网络等效电流源的外特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    } 
+                    \hline
+                    $R_L$ (档位)& a & b & c & d & e & f & g \\ \hline
+                    $U(V)$ & 0 & 0.26 & 0.57 & 0.78 & 0.88 & 0.97 & 1.02 \\ \hline
+                    $I(mA)$ & 3 & 2.5 & 1.9 & 1.5 & 1.3 & 1.2 & 1.0 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \noindent\hspace{2em}测量有源二端网络等效电流源的外特性：恒流源调整到表5－1中的$I_SC$数值，
+                内阻$R_S$按表5－1中计算出来的$R_S$（取整）选取固定电阻。然后，用电阻箱改变负载电阻$R_L$的阻值，逐点测量
+                对应的电压、电流，将数据记入表5－4中。
+                电流，将数据记入表5－3中。
+                \begin{table}[H]
+                    \centering
+                    \caption{有源二端网络等效电流源的外特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    } 
+                    \hline
+                    $R_L$ (档位)& a & b & c & d & e & f & g \\ \hline
+                    $U_{AB}(V)$ & 0 & 0.28 & 0.59 & 0.78 & 0.88 & 0.97 & 1.02 \\ \hline
+                    $I(mA)$ & 3.0 & 2.5 & 1.9 & 1.5 & 1.3 & 1.2 & 1.0 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 测定有源二端网络等效电阻(又称入端电阻)的其它方法：将被测有源网络内的所有独立源置
+                零(将电流源$I_{S}$去掉，也去掉电压源，并在原电压端所接的两点用一根短路导线相连)，然后用伏安
+                法或者直接用万用表的欧姆档去测定负载$R_L$
+                开路后$A,B$两点间的电阻，此即为被测网络的等效内
+                阻$R_{eq}$或称网络的入端电阻$R_1$。 
+                \newline
+                综上，有$R_{eq} = \SI{1330}{\ohm}$  
+                \item 用半电压法和零示法测量被测网络的等效内阻$R_O$及其开路电压$U_{OC}$。  
+                \item 用半电压法和零示法测量有源二端网络的等效参数
+                \par
+                \noindent\hspace{2em}半电压法：在图5－5电路中，首先断开负载电阻$R_L$，测量有源二端网络的开路电压$U_OC$，然
+                后接入负载电阻$R_L$，调节$R_L$直到两端电压等于
+                $\frac{U_{OC}}{2}$为止，此时负载电阻RL的大小即为等效电源的
+                内阻$R_S$的数值。记录$U_OC$和$R_S$数值。
+                \par
+                \noindent\hspace{2em}零示法测开路电压$U_{OC}$：实验电路如图5－4所示，其中：有源二端网络选用网络1，恒压源用
+                0～30V 可调输出端，调整输出电压$U$，观察电压表数值，当其等于零时输出电压$U$的数值即为有
+                源二端网络的开路电压$U_{OC}$，并记录$U_{OC}$数值。 
+            \end{enumerate}
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 测量时，注意电流表量程的更换。
+                \item 改接线路时，要关掉电源。 
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 如何测量有源二端网络的开路电压和短路电流，在什么情况下不能直接测量开路电压和短路
+                电流？\newline
+                A: 有源二端网络的开路电压和短路电流可以直接测量，当有源二端网络的内阻很低时不能直接测量开路电压和短路电流。
+                \item 说明测量有源二端网络开路电压及等效内阻的几种方法，并比较其优缺点。\newline
+                A: 有源二端网络开路电压及等效内阻的几种方法有开路电压、短路电流法、伏安法、半电压法、零示法，
+                开路电压、短路电流法简单易行，但不能测量内阻很低的有源二端网络，伏安法测量精度高，但需要测量外特性曲线，
+                半电压法和零示法测量精度高，但需要调节负载电阻。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 回答思考题。\newline
+                A: 见预习与思考题。
+                \item 根据表6-1和表6-2的数据，计算有源二端网络的等效参数$U_S$和$R_S$。\newline
+                A: $U_S = 12V, R_S = \SI{519}{\ohm}$
+                \item 根据半电压法和零示法测量的数据，计算有源二端网络的等效参数$U_S$和$R_S$。\newline
+                A: $U_S = 12V, R_S = \SI{520}{\ohm}$
+                \item 实验中用各种方法测得的$U_{OC}$和$R_S$是否相等？试分析其原因。\newline
+                A: 实验中用各种方法测得的$U_{OC}$和$R_S$不相等，可能是由于测量误差导致的。
+                \item 根据表6-2、表6-3和表6-4的数据，绘出有源二端网络和有源二端网络等效电路的外
+                特性曲线, 验证戴维南定理和诺顿定理的正确性。
+                \begin{figure}[H]
+                    \centering
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure5-6-1.png}
+                        \caption{原电路}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure5-6-2.png}
+                        \caption{等效电压源}
+                    \end{subfigure}
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure5-6-3.png}
+                        \caption{等效电流源}   
+                    \end{subfigure}
+                    \caption{有源二端网络和等效电路的外特性曲线}
+                \end{figure}
+                \item 说明戴维南定理和诺顿定理的应用场合。\newline
+                A: 戴维南定理和诺顿定理适用于任何线性有源二端网络。
+            \end{enumerate}
+    \section{典型周期性电信号的观察和测量}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 加深理解周期性信号的有效值和平均值的概念，学会计算方法。
+                \item 了解几种周期性信号（正弦波、矩形波、三角波）的有效值、平均值和幅值的关系。
+                \item 掌握信号源的使用方法。 
+            \end{enumerate}
+        \subsection{原理说明}
+            \noindent\hspace{2em}正弦波、矩形波、三角波都属于周期性信号，它们的电压波形如图6－1（a）、（b）、（c）所
+            示，图中各波形的幅值为$U_m$
+            ，周期为$T$。用有效值表示周期性信号的大小（做功能力），平均值表
+            示周期性信号在一个周期里平均起来的大小，本实验是取波形绝对值的平均值，它们都与幅值有一
+            定关系。 
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.8\textwidth]{image/figure6-1.png}
+                \caption{}
+            \end{figure}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 正弦波电压有效值、平均值的计算
+                \newline 如图6-1（a）所示，设正弦波电压$u(t)=U_msin\omega t$，则其有效值为：
+                \begin{equation*}
+                    U = \sqrt{\frac{1}{T}\int_{0}^{T}u^2 dt} = \sqrt{\frac{1}{T} \int_{0}^{T} U_{m}^{2} \sin ^2 \omega 
+                    t d(\omega t)} = \frac{U_m}{\sqrt{2}} = 0.707U_m
+                \end{equation*} 
+                正弦波电压的平均值为零，若按正弦波电压绝对值（即全波整流波形）计算，则其平均值为：
+                \begin{equation*}
+                    U_{V} = \frac{2}{T} \int_{0}^{\frac{T}{2}} udt
+                    = \frac{2}{T} \int_{0}^{\frac{T}{2}} U_m \sin \omega t d(\omega t) 
+                    = \frac{4U_m}{T} = \frac{2U_m}{\pi} = 0.636U_m
+                \end{equation*} 
+                \item 矩形波电压有效值、平均值的计算
+                \newline 如图6－1（b）所示，有效值等于电压的“方均根”，由于电压波形对称，只计算半个周期即可:
+                \begin{equation*}
+                    U = \sqrt{\frac{2}{T}\int_{0}^{\frac{T}{2}}U_{m}^{2} dt} 
+                    = \sqrt{\frac{2U_{m}^{2}}{T} \times t \big|_{0}^{\frac{T}{2}}} = U_m
+                \end{equation*}
+                取波形绝对值的平均值，同样，只计算半个周期即可：
+                \begin{equation*}
+                    U_{V} = \frac{U_m \times \frac{T}{2}}{\frac{T}{2}} = U_m
+                \end{equation*}
+                \item 三角波电压有效值、平均值的计算
+                \newline 如图6－1（c）所示，由于波形对称，在四分之一个周期里，$u = \frac{4U_m}{T} \times t $，则有效值：
+                \begin{equation*}
+                    U = \sqrt{\frac{4}{T}\int_{0}^{\frac{T}{4}}u^2 dt} 
+                    = \sqrt{\frac{4}{T} \int_{0}^{\frac{T}{4}} \left( \frac{4U_m}{T} \times t \right)^2 dt} 
+                    = \sqrt{\frac{4^3 U_{m}^{2}}{T^3}\int_{0}^{\frac{T}{4}} t^2 dt}
+                    = \frac{U_m}{\sqrt{3}} = 0.577U_m
+                \end{equation*}
+                取波形绝对值的平均值，同样，只计算四分之一个周期即可:
+                \begin{equation*}
+                    U_{V} = \frac{\left( U_m \times \frac{T}{4} / 2\right)}{\frac{T}{4}} 
+                    = \frac{U_m}{2} = 0.5U_m
+                \end{equation*}
+            \end{enumerate}
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 示波器（自备）；
+                \item 信号源。 
+            \end{enumerate}
+        \subsection{实验内容}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 观测正弦波的波形和幅值
+                \begin{enumerate}[label=\textbf{\alph*}.]
+                    \item 将信号源的“波形选择”开关置正弦波信号位置上；
+                    \item 将信号源的信号输出端与示波器连接；
+                    \item 接通信号源电源，调节信号源的频率旋钮（包括‘频段选择’开关、频率粗调和频率细调旋钮），
+                    使输出信号的频率为\SI{1}{kHz}（由频率计读出），调节输出信号的‘幅值调节’旋钮，使信号源输出‘幅值’ 
+                    为\SI{1}{V}，观察波形。
+                    \item 使用自动测量，坐标计算和光标测量方法正弦波的幅值，周期。
+                    \begin{figure}[H]
+                        \centering
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure6-2-1.png}
+                            \caption{自动测量}
+                        \end{subfigure}
+                        \hfill
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure6-2-2.png}
+                            \caption{坐标计算}
+                        \end{subfigure}
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure6-2-3.png}
+                            \caption{光标测量}
+                        \end{subfigure}
+                        \caption{三种方法测量正弦波的幅值、周期}
+                    \end{figure}
+                \end{enumerate}
+                \item 观测矩形波的波形和幅值
+                \newline 将信号源的“波形选择”开关置方波信号位置上，重复上述步骤。
+                \begin{figure}[H]
+                    \centering
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure6-3-1.png}
+                        \caption{自动测量}
+                    \end{subfigure}
+                    \hfill
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure6-3-2.png}
+                        \caption{坐标计算}
+                    \end{subfigure}
+                    \begin{subfigure}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure6-3-3.png}
+                        \caption{光标测量}
+                    \end{subfigure}
+                    \caption{三种方法测量矩形波的幅值、周期}
+                \end{figure}
+                \item 观测三角波的波形和幅值
+                \newline 将信号源的“波形选择”开关置锯齿波信号位置上，重复上述步骤。
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 了解周期性信号有效值、平均值和幅值的概念。 \newline
+                A: 有效值，又称为均方根值，是信号在一段时间内的平均能量的度量,
+                平均值是信号在一个周期内所有瞬时值的平均，幅值是指周期性信号的最大值。
+                \item 若正弦波、矩形波、三角波的幅值均为1V，试计算它们的有效值和平均值（正弦波的平均
+                值按全波整流波形计算）。\newline
+                A: 正弦波的有效值为0.707V，平均值为0.636V；矩形波的有效值为1V，平均值为1V；三角波的有效值为0.577V，平均值为0.5V。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 回答思考题。\newline
+                A: 见预习与思考题。
+                \item 整理实验数据，并与计算值（思考题3）相比较。 
+                \item 试计算图6-4所示波形（方波）的有效值和平均值。
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.45\textwidth}
+                        \raggedright
+                        \noindent\hspace{2em}题述波形在$\left( 0 \leq x \leq T\right)$内可表述为以下函数：
+                        \begin{equation*}
+                            u(t) = \left\{
+                            \begin{aligned}
+                                &U_m, &\quad 0 \leq t \leq \frac{T}{2} \\
+                                &0, &\quad \frac{T}{2} \leq t \leq T
+                            \end{aligned}
+                            \right.
+                        \end{equation*}
+                        由有效值公式：
+                        \begin{equation*}
+                            U = \sqrt{\frac{1}{T}\int_{0}^{T}u^{2} dt}
+                        \end{equation*}
+                        代入可得：$U = \frac{U_m}{\sqrt{2}}$。
+                        由平均值公式：
+                        \begin{equation*}
+                            U_{V} = \frac{1}{T}\int_{0}^{T} udt
+                        \end{equation*}
+                        代入可得：$U_{V} = \frac{U_m}{2}$
+                    \end{minipage}
+                    \hfill
+                    \begin{minipage}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure6-4.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+            \end{enumerate}
+    \section{$RC$串、并联选频网络特性的测试}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 研究$RC$串、并联电路及$RC$双\textit{T}电路的频率特性。
+                \item 学会用示波器测定$RC$网络的幅频特性和相频特性。 
+                \item 熟悉文氏电桥电路的结构特点及选频特性。
+            \end{enumerate}
+        \subsection{原理说明}
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.55\textwidth}
+                    \noindent\hspace{2em}图7－1所示$RC$串、并联电路的频率特性：
+                    \begin{equation*}
+                        N(j\omega) = \frac{\dot{U_o}}{\dot{U_i}} = \frac{1}{3+j\left( \omega RC -\frac{1}{\omega RC}\right)}
+                    \end{equation*}
+                \end{minipage}
+                \begin{minipage}[H]{0.4\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-1.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.5\textwidth}
+                    \noindent\hspace{2em}其中幅频特性为：
+                    \begin{equation*}
+                        A(\omega) = \frac{U_o}{U_i}
+                        = \frac{1}{\sqrt{3^2 +\left( \omega RC - \frac{1}{\omega RC}\right)^2}}
+                    \end{equation*}
+                    \noindent\hspace{2em}相频特性为：
+                    \begin{equation*}
+                        \varphi(\omega) = \varphi_o - \varphi_i
+                        = - \arctan \left( \frac{\omega RC - \frac{1}{\omega RC}}{3}\right)
+                    \end{equation*}
+                \end{minipage}
+                \begin{minipage}[H]{0.4\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-2.png}
+                    \captionof{figure}{}
+                \end{minipage}
+
+            \end{adjustwidth}
+
+            \noindent\hspace{2em}幅频特性和相频特性曲线如图7－2所示，幅频特性呈
+            带通特性。
+            \par
+            \noindent\hspace{2em}当角频率$\omega = \frac{1}{RC}$时，$A(\omega) = \frac{1}{3}$,
+            $\varphi(\omega) = 0^{\circ}$，$U_o$和$U_i$同相，即电路发生谐振，谐振频率$f_0 = \frac{1}{2\pi RC}$。
+            也就是说，当信号频率为$f_0$时，$RC$串、并联电路的输出电压$U_o$与输入电压$U_i$同相，其大小是输入
+            电压的三分之一，这一特性称为$RC$串、并联电路的选频特性，该电路又称为文氏电桥。
+            \par
+            \noindent\hspace{2em}测量频率特性用‘逐点描绘法’，图7－3为用双踪示波器测量$RC$网络频率特性的测试图。
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-3.png}
+                    \captionof{figure}{}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-4.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+            \par
+            \noindent\hspace{2em}测量幅频特性：保持信号源输出电压（即$RC$网络输入电压）$U_i$恒定，改变频率$f$，并测量对
+            应的$RC$网络输出电压$U_O$，计算出它们的比值$A=\frac{U_O}{U_I}$，然后逐点描绘出幅频特性；
+            \par
+            \noindent\hspace{2em}测量相频特性：保持信号源输出电压（即$RC$网络输入电压）$U_i$恒定，改变频率$f$，用双踪示
+            波器观察$U_O$与$U_I$波形，如图7－4所示，若两个波形的延时为$\Delta t$，周期为$T$，则它们的相位差
+            $\varphi = 360^{\circ} \times \frac{\Delta t}{T}$，然后逐点描绘出相频特性。
+            \par
+            \noindent\hspace{2em}用同样方法可以测量$RC$双$T$电路的幅频特性，$RC$双$T$电路见图 7－5，其幅频特性具有带
+            阻特性，如图7－6所示。
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-5.png}
+                    \captionof{figure}{}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure7-6.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 信号源（自备）；
+                \item EEL-51S组件、弱电元件箱； 
+                \item 双踪示波器（自备）。
+            \end{enumerate}
+        \subsection{实验内容}
+            \begin{enumerate}
+                \item 测量$RC$串、并联电路的幅频特性
+                \par
+                \noindent\hspace{2em}实验电路如图 7－3 所示，其中，$RC$网络的参数选择为：$R=\SI{200}{\ohm}$，$C = \SI{200}{\micro F}$（在
+                NEEL—003组件上），信号源输出正弦波电压作为电路的输入电压$U_i$，调节信号源输出电压幅值，
+                使$U_i=\SI{2}{V}$。
+                \par
+                \noindent\hspace{2em}改变信号源正弦波输出电压的频率$f$（由频率计读得），并保持$U_i=\SI{2}{V}$不变，测量输出电压$U_O$（可先测量
+                $A=\frac{1}{3}$ 时的频率$f_0$，然后再在$f_0$左右选几个频率点，测量$U_O$），将数据记入表7－1中。
+                \par
+                \noindent\hspace{2em}在图7－3的$RC$网络中，选取另一组参数：$R=\SI{2}{\kilo\ohm}$，$C=\SI{0.1}{\micro\farad}$，重复上述测量，将数据
+                记入表7－1中。 
+                \begin{table}[H]
+                    \centering
+                    \caption{幅频特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    \multirow{2}*{
+                        $
+                            \begin{aligned}
+                                &R = \SI{2}{\kilo\ohm}, \\
+                                &C = \SI{0.1}{\micro\farad}
+                            \end{aligned}
+                        $
+                    } & $f$ (\si{\hertz})
+                    & 100 & 300 & 500 & 795 & 900 & 1000 & 1500 & 2000 \\ \cline{2-10}
+                    ~ & $U_O$ (\si{\volt}) & 0.252 & 0.543 & 0.643 & 0.704 & 0.67 & 0.664 & 0.612 & 0.543 \\ \hline
+                    \multirow{2}*{
+                        $
+                            \begin{aligned}
+                                &R = \SI{200}{\ohm}, \\
+                                &C = \SI{2.2}{\micro\farad}
+                            \end{aligned}
+                        $
+                    } & $f$ (\si{\hertz})
+                    & 50 & 100 & 200 & 362 & 400 & 500 & 600 & 800 \\ \cline{2-10}
+                    ~ & $U_O$ (\si{\volt}) & 0.261 & 0.428 & 0.576 & 0.607 & 0.601 & 0.58 & 0.553 & 0.493 \\ \hline
+                    \end{tabularx}
+                \end{table}
+                \item 测量$RC$串、并联电路的相频特性
+                \par
+                \noindent\hspace{2em}实验电路如图7－3所示，按实验原理中测量相频特性的说明，实验步骤同1，将实验数
+                据记入表7－2中。
+                \item 测定$RC$双$T$电路的幅频特性
+                实验电路如图7－3所示，其中$RC$网络按图7－5连接，实验步骤同1，将实验数据记
+                入自拟的数据表格中。 
+                \begin{table}[H]
+                    \centering
+                    \caption{相频特性数据}
+                    \begin{tabularx}{\textwidth}{
+                        |>{\centering\arraybackslash}l
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X
+                        |>{\centering\arraybackslash}X|
+                    }
+                    \hline
+                    \multirow{4}*{
+                        $
+                            \begin{aligned}
+                                &R = \SI{200}{\ohm}, \\
+                                &C = \SI{2.2}{\micro\farad}
+                            \end{aligned}
+                        $
+                    }
+                    & $f$ (\si{\hertz}) & 50 & 100 & 200 & 362 & 400 & 500 & 600 & 800 \\ \cline{2-10}
+                    ~ & $T$ (\si{\micro\second}) & 19.8 & 10 & 5 & 2.76 & 2.5 & 2 & 1.67 & 1.25 \\ \cline{2-10}
+                    ~ & $\Delta t$ (\si{\micro\second}) & 3.3 & 1.25 & 0.292 & -0.022 & 0.049 & -0.083 & -0.097 & -0.118 \\ \cline{2-10}
+                    ~ & $\varphi$ (\si{\degree}) & 60 & 45 & 10.5 & -0.8 & 1.8 & -3 & -3.5 & -4.2 \\ \hline
+                    \multirow{4}*{
+                        $
+                            \begin{aligned}
+                                &R = \SI{2}{\kilo\ohm}, \\
+                                &C = \SI{0.1}{\micro\farad}
+                            \end{aligned}
+                        $
+                    }
+                    & $f$ (\si{\hertz}) &100 & 300 & 500 & 795 & 900 & 1000 & 1500 & 2000 \\ \cline{2-10}
+                    ~ & $T$ (\si{\micro\second}) & 10 & 3.33 & 2 & 1.25 & 1.11 & 1 & 0.67 & 0.5 \\ \cline{2-10} 
+                    ~ & $\Delta t$ (\si{\micro\second}) & 1.67 & 0.305 & 0.078 & 0 & -0.025 & -0.031 & -0.048 & -0.053 \\ \cline{2-10}
+                    ~ & $\varphi$ (\si{\degree}) & 60 & 33 & 14 & 0 & -8 & -11 & -26 & -38 \\ \hline
+                    \end{tabularx}
+                \end{table}
+            \end{enumerate}
+        \subsection{实验注意事项}
+            \noindent\hspace{2em}由于信号源内阻的影响，注意在调节输出电压频率时，应同时调节输出电压大小，使实验电路
+            的输入电压保持不变。
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据电路参数，估算$RC$串、并联电路两组参数时的谐振频率。\newline
+                A: $f_0 = \frac{1}{2\pi RC}$，$f_1 = \frac{1}{2\pi \times 200 \times 2.2 \times 10^{-6}} \approx \SI{362}{\hertz}$，
+                $f_2 = \frac{1}{2\pi \times 2000 \times 0.1 \times 10^{-6}} \approx \SI{795}{\hertz}$。
+                \item 推导$RC$串、并联电路的幅频、相频特性的数学表达式。\newline
+                A:串联部分阻抗为$Z_{\text{串}} = R + \frac{1}{j\omega C}$，并联部分阻抗为$Z_{\text{并}} = \frac{R}{1+j\omega RC}$，
+                则
+                $$
+                \frac{U_o}{U_i} = \frac{Z_{\text{并}}}{Z_{\text{串}} + Z_{\text{并}}} = 
+                \frac{\frac{R}{1+j\omega RC}}{\frac{R}{1+j\omega RC}+\frac{1+j\omega RC}{j\omega C}} 
+                = \frac{1}{3+j\left( \omega RC - \frac{1}{\omega RC}\right)}
+                $$
+                得到$N(j\omega)$，再由$N(j\omega)$即可得到$A(\omega)$和$\varphi(\omega)$。
+                \item 什么是$RC$串、并联电路的选频特性？当频率等于谐振频率时，电路的输出、输入有何关系？\newline
+                A: 选频特性是指在一定频率范围内，电路对某一频率的信号有较大的增益，对其他频率的信号有较小的增益。
+                当频率等于谐振频率时，电路的输出、输入同相，大小是输入电压的三分之一。
+                \item 试定性分析$RC$双Ｔ电路的幅频特性。\newline 
+                A: $RC$双$T$电路的幅频特性具有带阻特性，选频特性。总体来看，该电路减小了输入信号的幅值，但在某一频率范围内，输出信号的幅值比其他频率范围内的幅值大。    
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 根据表15-1 和表15-2 实验数据，绘制$RC$串、并联电路的两组幅频特性和相频特性曲
+                线，找出谐振频率和幅频特性的最大值，并与理论计算值比较。
+                    \begin{figure}[H]
+                        \centering
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure7-7-1.png}
+                            \caption{$R = \SI{2}{\kilo\ohm}, C = \SI{0.1}{\micro\farad}$幅频特性}
+                        \end{subfigure}
+                        \hfill
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure7-7-2.png}
+                            \caption{$R = \SI{2}{\kilo\ohm}, C = \SI{0.1}{\micro\farad}$相频特性}
+                        \end{subfigure}
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure7-7-3.png}
+                            \caption{$R = \SI{200}{\ohm}, C = \SI{2.2}{\micro\farad}$幅频特性}
+                        \end{subfigure}
+                        \hfill
+                        \begin{subfigure}[H]{0.45\textwidth}
+                            \centering
+                            \includegraphics[width=\textwidth]{image/figure7-7-4.png}
+                            \caption{$R = \SI{200}{\ohm}, C = \SI{2.2}{\micro\farad}$相频特性}
+                        \end{subfigure}
+                        \caption{幅频特性和相频特性曲线}
+                    \end{figure}
+                    A:$R = \SI{2}{\kilo\ohm}, C = \SI{0.1}{\micro\farad}$的谐振频率为\SI{362}{\hertz}，幅频特性最大值为0.607V，
+                    与理论值相差\SI{0.06}{\volt},
+                    $R = \SI{200}{\ohm}, C = \SI{2.2}{\micro\farad}$的谐振频率为\SI{795}{\hertz}，幅频特性最大值为0.704V，
+                    与理论值相差\SI{0.037}{\volt}。
+                \item 设计一个谐振频率为\SI{1}{\kilo\hertz}文氏电桥电路，说明它的选频特性。\newline
+                A: 由$RC$串联电路的选频特性公式$f_0 = \frac{1}{2\pi RC}$，取$R = \SI{10}{\kilo\ohm}$，$C = \SI{159.15}{\nano\farad}$。
+                取两个\SI{10}{\kilo\ohm}的电阻，两个\SI{159.15}{\nano\farad}的电容，即可构建谐振频率为\SI{1}{\kilo\hertz}的文氏电桥电路。
+                文氏电桥的选频特性表现为在谐振频率$f_0$附近，电路的增益最大，并且相位差为零。当频率偏离$f_0$时，增益迅速下降，并且相位差开始变化。
+                \item 根据实验3的实验数据，绘制$RC$双Ｔ电路的幅频特性，并说明幅频特性的特点。
+            \end{enumerate}
+    \section{正弦稳态交流电路相量的研究}
+        \subsection{实验目的}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 研究正弦稳态交流电路中电压、电流相量之间的关系。
+                \item 掌握$RC$串联电路的相量轨迹及其作移相器的应用。 
+                \item 掌握日光灯线路的接线。
+                \item 理解改善电路功率因数的意义并掌握其方法。
+            \end{enumerate}
+        \subsection{原理说明}
+            \begin{enumerate}
+                \item 在单相正弦交流电路中，用交流电流表则得各支中的电流值，用交流电压表测得回路各元件
+                两端的电压值，它们之间的关系满足相量形式的基尔霍夫定律，即
+                \begin{adjustwidth}{0em}{0em}
+                    \begin{minipage}[H]{0.45\textwidth}
+                        电流定律
+                        \begin{equation*}
+                           \sum i = 0
+                        \end{equation*}
+                        电压定律
+                        \begin{equation*}
+                            \sum \dot{U} = 0
+                        \end{equation*}
+                    \end{minipage}
+                    \begin{minipage}[H]{0.45\textwidth}
+                        \centering
+                        \includegraphics[width=\textwidth]{image/figure8-1.png}
+                        \captionof{figure}{}
+                    \end{minipage}
+                \end{adjustwidth}
+                \item 如图8—1所示的$RC$串联电路，在正弦稳态信号$\dot{U}$的激励下，$\dot{U_R}$与$\dot{U_C}$保持
+                有\SI{90}{\degree}的相位差，即当阻值$R$改变时，$\dot{U_R}$的相量轨迹是一个半圆，$\dot{U}$，$\dot{U_C}$与$\dot{U_R}$
+                三者形成一个直角形的电压三角形。$R$值改变时，可改变$\varphi$角的大小，从而达到移相的目的。 
+                \item 日光灯线路如图8—4所示，图中$A$是日光灯管，$L$是镇流器，$S$是启辉器，$C$是补偿电
+                容器，用以改善电路的功率因数（$\cos \varphi$值）。有关日光灯的工作原理请自行翻阅有关资料。
+            \end{enumerate}
+        \subsection{实验设备}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 交流电压、电流、功率、功率因数表； 
+                \item 调压器； 
+                \item \SI{20}{\watt}镇流器，$\SI{400}{\volt} / \SI{4.7}{\micro\farad}$电容器，电流插头，$\SI{25}{\watt} / \SI{220}{\volt}$白炽灯。 
+            \end{enumerate}
+        \subsection{实验内容}
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \begin{enumerate}[label=\textbf{\arabic*}.]
+                        \item 用一个220\si{\volt}，25\si{\watt}的白炽灯泡和电容
+                        组成如图8—1所示的实验电路，按下闭合按
+                        钮开关调节调压器至220\si{\volt}，验证电压三角形关
+                        系。 
+                    \end{enumerate}
+                \end{minipage}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure8-2.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+            \begin{adjustwidth}{0em}{0em}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \begin{enumerate}[label=\textbf{\arabic*}., start=2]    
+                        \item 日光灯线路接线与测量
+                        \par
+                        按图8—3组成线路，经指导教师检查
+                        后按下闭合按钮开关，调节自耦调压器的输
+                        出，使其输出电压缓慢增大，直到日光灯刚
+                        启辉点亮为至，记下三表的指示值。然后将
+                        电压调至\SI{220}{\volt}，测量功率$P$，电流$I$，电
+                        压$U$, $U_L$, $U_A$等值，验证电压、电流相量关系。
+                    \end{enumerate}
+                \end{minipage}
+                \begin{minipage}[H]{0.45\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{image/figure8-3.png}
+                    \captionof{figure}{}
+                \end{minipage}
+            \end{adjustwidth}
+            \begin{table}[H]
+                \centering
+                \caption{}
+                \begin{tabularx}{\textwidth}{
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X|
+                }
+                \hline
+                \multicolumn{5}{|c|}{测量数值}
+                & \multicolumn{2}{c|}{计算值} \\ \hline
+                $P(\si{\watt})$ & $I(\si{\ampere})$ & $U(\si{\volt})$ & $U_L(\si{\volt})$ & $U_A(\si{\volt})$
+                & $\cos \varphi$ & $r(\si{\ohm})$ \\ \hline
+                24 & 0.246 & 220 & 192.6 & 66.4 & 0.45 & 178.93 \\ \hline
+                \end{tabularx}
+            \end{table}
+            \begin{enumerate}[label=\textbf{\arabic*}., start=3]
+                \item 并联电路——电路功率因数的改善
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.5\textwidth]{image/figure8-4.png}
+                    \caption{}
+                \end{figure}
+                \noindent\hspace{2em}按图 8—4 组成实验线路经指导老师检查后，按下绿色按钮开关调节自耦调压器的输出调至
+                \SI{220}{\volt}，记录功率表，电压表读数，通过一只电流表和三个电流取样插座分别测得三条支路的电流，
+                改变电容值，进行三次重复测量。
+            \end{enumerate}
+            \begin{table}[H]
+                \centering
+                \caption{}
+                \begin{tabularx}{\textwidth}{
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X
+                    |>{\centering\arraybackslash}X|
+                }
+                \hline
+                \multirow{2}*{
+                    $
+                        \begin{aligned}
+                            &\text{电容值} \\ 
+                            &(\si{\micro\farad})
+                        \end{aligned}
+                    $
+                } & \multicolumn{8}{c|}{测量数值} & 
+                \multirow{2}*{
+                    $
+                        \begin{aligned}
+                            &\text{计算值} \\ 
+                            &\cos \varphi
+                        \end{aligned}
+                    $
+                }\\ \cline{2-9} 
+                ~ & $P(\si{\watt})$ & $U(\si{\volt})$ & $U_C(\si{\volt})$ & $U_L(\si{\volt})$ & $U_A(\si{\volt})$ & $I(\si{\ampere})$ &
+                $I_C(\si{\ampere})$ & $I_L(\si{\ampere})$ & ~ \\ \hline
+                1 & 24.5 & 220 & 220.2 & 192.5 & 66.8 & 0.130 & 0.262 & 0.252 & 0.934 \\ \hline
+                2 & 24.5 & 220.2 & 220.2 & 192.2 & 66.6 & 0.137 & 0.143 & 0.250 & 0.826 \\ \hline
+                3.7 & 24.5 & 220.2 & 220.2 & 192.2 & 67.6 & 0.185 & 0.07 & 0.252 & 0.602 \\ \hline
+                \end{tabularx}
+            \end{table}
+        \subsection{实验注意事项}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 功率表要正确接入电路，读数时要注意量程和实际读数的折算关系。
+                \item 线路接线正确，日光灯不能启辉时，应检查启辉器及其接触是否良好。
+                \item 上电前确定交流调压器输出电压为零（即调压器逆时针旋到底）。
+            \end{enumerate}
+        \subsection{预习与思考题}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 参阅课外资料，了解日光灯的启辉原理。\newline
+                A: 日光灯的启辉原理是通过启辉器产生高压脉冲，使日光灯管内的气体电离，从而使日光灯管发光。
+                \item 在日常生活中，当日光灯上缺少了启辉器时，人们常用一导线将启辉器的两端短接一下，然
+                后迅速断开，使日光灯点亮；或用一只启辉器去点亮多只同类型的日光灯，这是为什么？\newline
+                A: 通过短接启辉器的两端，可以产生高压脉冲，从而使日光灯管发光。
+                \item 为了提高电路的功率因数，常在感性负载上并联电容器，此时增加了一条电流支路，试问电
+                路的总电流是增大还是减小，此时感性元件上的电流和功率是否改变？\newline
+                A: 电路的总电流减小，感性元件上的电流和功率不变。
+                \item 提高线路功率因数为什么只采用并联电容器法，而不用串联法？所并的电容器是否越大越
+                好？\newline
+                A: 串联法会增大电路的电流，而并联法不会，所以只采用并联电容器法。并联合适的电容器可以提高功率因数。
+            \end{enumerate}
+        \subsection{实验报告要求}
+            \begin{enumerate}[label=\textbf{\arabic*}.]
+                \item 完成数据表格中的计算，进行必要的误差分析。
+                A:计算见表格。误差分析：功率因数的计算误差主要来自电流表分压，电压表分流。
+                \item 根据实验数据，分别绘出电压、电流相量图，验证相量形式的基尔霍夫定律。
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.5\textwidth]{image/figure8-5.jpg}
+                    \caption{电压、电流相量图}
+                \end{figure}
+                \item 讨论改善电路功率因数的意义和方法。\newline
+                A: 改善电路功率因数可以减小电路的无功功率，提高电路的有功功率，减小线路的损耗。
+                \item 装接日光灯线路的心得体会及其他。 \newline
+                A: 装接日光灯线路时，要注意日光灯管的两端不能短接，否则会损坏日光灯管。日光灯管的启辉器要接触良好，否则日光灯管不能启辉。
+            \end{enumerate}
+\end{document}
